@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AuthenticationResponse register(RegisterDTO registerDTO) {
-        String codenumber = DataUtils.generateTempPwd(4);
+        var codenumber = DataUtils.generateTempPwd(4);
         var user = User.builder()
                 .fullname(registerDTO.getFullname())
                 .username(registerDTO.getUsername())
@@ -51,12 +51,11 @@ public class UserServiceImpl implements UserService {
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
                 .code(codenumber)
                 .role(Role.USER)
-                .state(State.PENDING)
+                .state(State.ACTIVE)
                 .build();
         repository.save(user);
         try {
             DataMailDTO dataMail = new DataMailDTO();
-
             dataMail.setTo(registerDTO.getEmail());
             dataMail.setSubject(Const.SEND_MAIL_SUBJECT.CLIENT_REGISTER);
 
@@ -65,7 +64,6 @@ public class UserServiceImpl implements UserService {
             props.put("username", registerDTO.getUsername());
             props.put("code", codenumber);
             dataMail.setProps(props);
-
             mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
         } catch (MessagingException exp){
             exp.printStackTrace();

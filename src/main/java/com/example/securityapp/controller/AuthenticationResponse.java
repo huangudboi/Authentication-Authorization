@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationResponse {
+
     String message;
     Boolean status;
     private String username;
@@ -24,6 +25,5 @@ public class AuthenticationResponse {
         this.message = message;
         this.status = status;
         this.token = token;
-
     }
 }

@@ -31,6 +31,8 @@ public class User implements UserDetails {
     private String email;
     @Column(name="password", length = 255)
     private String password;
+    @Column(name="code", length = 255)
+    private String code;
 
     @Enumerated(EnumType.STRING)
     private Role role;

@@ -43,11 +43,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AuthenticationResponse register(RegisterDTO registerDTO) {
+        String codenumber = DataUtils.generateTempPwd(4);
         var user = User.builder()
                 .fullname(registerDTO.getFullname())
                 .username(registerDTO.getUsername())
                 .email(registerDTO.getEmail())
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
+                .code(codenumber)
                 .role(Role.USER)
                 .state(State.PENDING)
                 .build();
@@ -61,7 +63,7 @@ public class UserServiceImpl implements UserService {
             Map<String, Object> props = new HashMap<>();
             props.put("fullname", registerDTO.getFullname());
             props.put("username", registerDTO.getUsername());
-            props.put("password", DataUtils.generateTempPwd(6));
+            props.put("code", codenumber);
             dataMail.setProps(props);
 
             mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
@@ -85,7 +87,12 @@ public class UserServiceImpl implements UserService {
                     ));
             }
             catch (RuntimeException e){
-                return new AuthenticationResponse("Password Not Match", false);
+                return new AuthenticationResponse("Password is Wrong", false);
+            }
+            System.out.println(user1.getCode());
+            System.out.println(loginDTO.getCode());
+            if(!user1.getCode().equals(loginDTO.getCode())){
+                return new AuthenticationResponse("Code is Wrong", false);
             }
             var jwtToken = jwtService.generateToken(user1);
             return new AuthenticationResponse("Login Success", true, loginDTO.getUsername(), jwtToken);

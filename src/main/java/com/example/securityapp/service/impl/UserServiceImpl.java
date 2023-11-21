@@ -104,9 +104,9 @@ public class UserServiceImpl implements UserService {
             dataMail.setSubject(Const.SEND_MAIL_SUBJECT.CLIENT_REGISTER);
 
             Map<String, Object> props = new HashMap<>();
-            props.put("fullname", registerDTO.getFullName());
-            props.put("username", registerDTO.getUserName());
-            props.put("code", codenumber);
+            props.put("fullName", registerDTO.getFullName());
+            props.put("userName", registerDTO.getUserName());
+            props.put("code", "Mã code đăng nhập hệ thống của bạn là:"+ codenumber);
             dataMail.setProps(props);
             mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
         } catch (MessagingException exp){

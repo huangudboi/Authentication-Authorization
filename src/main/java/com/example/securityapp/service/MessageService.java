@@ -11,6 +11,6 @@ public interface MessageService {
     void save(Message message);
     void remove(Message message);
     Optional<Message> findById(Long id);
-    List<Message> findByUsername(String username);
+    List<Message> findByUserName(String userName);
 
 }

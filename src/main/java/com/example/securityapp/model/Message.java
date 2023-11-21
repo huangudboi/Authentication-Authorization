@@ -22,7 +22,7 @@ public class Message implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name="username")
-    private String username;
+    private String userName;
     @Column(name="password")
     private String password;
     @Column(name="messages")
@@ -31,17 +31,5 @@ public class Message implements Serializable {
     private Integer status;
     @Column(name="created_on")
     private String created_on;
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", messages='" + messages + '\'' +
-                ", status=" + status +
-                ", created_on=" + created_on +
-                '}';
-    }
 
 }

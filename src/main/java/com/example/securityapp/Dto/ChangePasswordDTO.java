@@ -1,5 +1,6 @@
 package com.example.securityapp.Dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,9 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginDTO {
-
+public class ChangePasswordDTO {
     private String userName;
-    private String password;
-    private String code;
+    private String oldPass;
+    private String newPass;
 }

@@ -1,7 +1,9 @@
 package com.example.securityapp.config;
 
 import com.example.securityapp.repository.UserRepository;
+import com.example.securityapp.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,11 +19,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> userRepository.findByUsername(username);
+        return username -> customUserDetailsService.loadUserByUsername(username);
     }
     @Bean
     public AuthenticationProvider authenticationProvider() {

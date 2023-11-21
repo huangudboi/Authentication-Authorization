@@ -9,6 +9,6 @@ public interface PassResetService {
 
     PasswordResetToken saveOrUpdate(PasswordResetToken passwordResetToken);
     PasswordResetToken getLastTokenByUserId(int userId);
-    ResponseEntity<?> resetPassword(String userEmail, HttpServletRequest request);
-    ResponseEntity<?> creatNewPass(String token, String newPassword);
+    ResponseEntity<?> resetPassword(String userName);
+    ResponseEntity<?> creatNewPass(String userName, String token, String newPassword);
 }

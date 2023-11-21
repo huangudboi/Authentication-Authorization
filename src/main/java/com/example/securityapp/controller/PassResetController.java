@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @AllArgsConstructor
@@ -17,11 +16,15 @@ public class PassResetController {
     private PassResetService passResetService;
 
     @GetMapping("/resetPassword")
-    public ResponseEntity<?> resetPassword(@RequestParam("email") String userEmail, HttpServletRequest request) {
-        return ResponseEntity.ok(passResetService.resetPassword(userEmail, request));
+    //Param thì cần truyền params vào khi callAPI không được sử dụng raw
+    public ResponseEntity<?> resetPassword(@RequestParam("userName") String userName) {
+        System.out.println(userName);
+        return ResponseEntity.ok(passResetService.resetPassword(userName));
     }
     @PostMapping("/creatNewPass")
-    public ResponseEntity<?> creatNewPass(@RequestParam("token") String token, @RequestParam("newPassword") String newPassword) {
-        return ResponseEntity.ok(passResetService.creatNewPass(token, newPassword));
+    public ResponseEntity<?> creatNewPass(@RequestParam("userName") String userName,
+                                          @RequestParam("token") String token,
+                                          @RequestParam("newPassword") String newPassword) {
+        return ResponseEntity.ok(passResetService.creatNewPass(userName, token, newPassword));
     }
 }

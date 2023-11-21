@@ -25,7 +25,6 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void remove(Message message) {
         messageRepository.delete(message);
-
     }
 
     @Override
@@ -39,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> findByUsername(String username) {
-        return messageRepository.findByUsername(username);
+    public List<Message> findByUserName(String userName) {
+        return messageRepository.findByUserName(userName);
     }
 }

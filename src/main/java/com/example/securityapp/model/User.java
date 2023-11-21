@@ -5,28 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name="user")
-public class User implements UserDetails {
+@Entity
+public class User {
     @Id
     @Column(name="user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userid;
+    private int userId;
     @Column(name="full_name", length = 255)
-    private String fullname;
+    private String fullName;
     @Column(name="user_name", length = 255)
-    private String username;
+    private String userName;
     @Column(name="email", length = 255)
     private String email;
     @Column(name="password", length = 255)
@@ -35,53 +32,11 @@ public class User implements UserDetails {
     private String code;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
-    @Enumerated(EnumType.STRING)
     private State state;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userid=" + userid +
-                ", fullname='" + fullname + '\'' +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "User_Role", joinColumns = @JoinColumn(name = "UserId"),
+            inverseJoinColumns = @JoinColumn(name = "RoleId"))
+    private Set<Role> listRoles = new HashSet<>();
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

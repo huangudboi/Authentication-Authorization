@@ -4,5 +4,5 @@ public enum State {
     PENDING,
     ACTIVE,
     DISABLED,
-    REMOVED
+    DELETED
 }

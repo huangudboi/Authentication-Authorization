@@ -61,7 +61,7 @@ public class MessageController {
 
     @GetMapping(value = "",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Message>> getMessageByUsername(@RequestParam(value="username") String username) {
-        List<Message> messages = messageService.findByUsername(username);
+        List<Message> messages = messageService.findByUserName(username);
         if (messages.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

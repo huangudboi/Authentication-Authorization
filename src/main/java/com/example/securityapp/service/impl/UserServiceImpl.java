@@ -163,19 +163,16 @@ public class UserServiceImpl implements UserService {
                 for(String role:strRoles){
                     switch (role) {
                         case "ADMIN":
-                            System.out.println("Có chức ADMIN");
                             Role adminRole = roleService.findByRoleName(ERole.ADMIN)
                                     .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                             listRoles.add(adminRole);
                             continue;
                         case "MODERATOR":
-                            System.out.println("Có chức MODERATOR");
                             Role modRole = roleService.findByRoleName(ERole.MODERATOR)
                                     .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                             listRoles.add(modRole);
                             continue;
                         case "USER":
-                            System.out.println("Có chức USER");
                             Role userRole = roleService.findByRoleName(ERole.USER)
                                     .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                             listRoles.add(userRole);

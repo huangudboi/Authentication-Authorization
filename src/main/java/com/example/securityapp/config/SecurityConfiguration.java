@@ -13,7 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecutityConfiguration {
+public class SecurityConfiguration {
 
     private final JwtAuthentication jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -26,6 +26,7 @@ public class SecutityConfiguration {
                         .requestMatchers("/api/v1/user/**").permitAll()
                         .requestMatchers("/api/v1/message/**").permitAll()
                         .requestMatchers("/api/v1/passReset/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

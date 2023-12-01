@@ -6,7 +6,6 @@ import com.example.securityapp.model.PasswordResetToken;
 import com.example.securityapp.model.User;
 import com.example.securityapp.repository.PassResetRepository;
 import com.example.securityapp.repository.UserRepository;
-import com.example.securityapp.security.CustomUserDetails;
 import com.example.securityapp.service.MailService;
 import com.example.securityapp.service.PassResetService;
 import com.example.securityapp.utils.Const;
@@ -14,7 +13,6 @@ import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

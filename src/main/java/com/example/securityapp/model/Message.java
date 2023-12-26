@@ -27,8 +27,6 @@ public class Message implements Serializable {
     private String password;
     @Column(name="messages")
     private String messages;
-    @Column(name="status")
-    private Integer status;
     @Column(name="created_on")
     private String created_on;
 

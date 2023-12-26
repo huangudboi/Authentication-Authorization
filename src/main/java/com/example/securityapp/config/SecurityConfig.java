@@ -2,6 +2,7 @@ package com.example.securityapp.config;
 
 import com.example.securityapp.repository.UserRepository;
 import com.example.securityapp.security.CustomUserDetailsService;
+import com.example.securityapp.security.JWTAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -42,5 +43,10 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JWTAuthenticationFilter jwtAuthenticationFilter() {
+        return new JWTAuthenticationFilter();
     }
 }

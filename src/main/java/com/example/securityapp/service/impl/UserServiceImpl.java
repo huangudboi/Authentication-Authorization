@@ -2,7 +2,6 @@ package com.example.securityapp.service.impl;
 
 import com.example.securityapp.Dto.*;
 import com.example.securityapp.Dto.response.ChangePassResponse;
-import com.example.securityapp.config.JwtService;
 import com.example.securityapp.Dto.response.AuthenticationResponse;
 import com.example.securityapp.model.ERole;
 import com.example.securityapp.model.Role;
@@ -11,6 +10,7 @@ import com.example.securityapp.model.User;
 import com.example.securityapp.repository.UserRepository;
 import com.example.securityapp.security.CustomUserDetails;
 import com.example.securityapp.security.CustomUserDetailsService;
+import com.example.securityapp.security.JWTGenerator;
 import com.example.securityapp.service.MailService;
 import com.example.securityapp.service.RoleService;
 import com.example.securityapp.service.UserService;
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private JwtService jwtService;
+    private JWTGenerator jwtGenerator;
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
             exp.printStackTrace();
         }
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getUserName());
-        var jwtToken = jwtService.generateToken(userDetails);
+        var jwtToken = jwtGenerator.generateToken(userDetails);
         return new AuthenticationResponse("Register Success", true, jwtToken);
     }
 
@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
                 return new AuthenticationResponse("Code is Wrong", false);
             }
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(user1.getUserName());
-            var jwtToken = jwtService.generateToken(userDetails);
+            var jwtToken = jwtGenerator.generateToken(userDetails);
             return new AuthenticationResponse("Login Success", true, loginDTO.getUserName(), jwtToken);
         }
     }

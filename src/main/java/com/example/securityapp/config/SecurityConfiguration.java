@@ -26,7 +26,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/v1/user/**").permitAll()
                         .requestMatchers("/api/v1/message/**").permitAll()
                         .requestMatchers("/api/v1/passReset/**").permitAll()
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/api/pokemon/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -26,7 +26,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order save(Order order) {
+    public Order createOrder(Order order) {
        return orderRepository.save(order);
     }
 
@@ -37,7 +37,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> findByOrderId(Long orderId) {
-        return orderRepository.findByOrderId(orderId);
+    public Order findByOrderId(Long orderId) {
+        Order order = orderRepository.findByOrderId(orderId).orElseThrow(() -> new OrderNotFoundException("OrderId could not be found"));
+        return order;
     }
 }

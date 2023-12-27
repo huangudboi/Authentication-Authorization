@@ -39,7 +39,7 @@ public class OrderRepositoryTests {
     }
 
     @Test
-    public void OrderRepository_GetAllOrder_ReturnsMoreThenOneReview() {
+    public void OrderRepository_GetAllOrder_ReturnsMoreThanOneOrder() {
         Order order = Order.builder().nameSender("Pham Van Huan").phoneSender("0981729501").addressSender("Hanoi").emailSender("dsadsadsadsad@gmail.com")
                 .nameReceiver("Nguyen Van A").phoneReceiver("0345353578").addressReceiver("Hcm").emailReceiver("ttttttt@gmail.com")
                 .latitude(33).latitude(45)
@@ -82,8 +82,8 @@ public class OrderRepositoryTests {
         orderRepository.save(order);
 
         orderRepository.deleteById(order.getOrderId());
-        Optional<Order> pokemonOrder = orderRepository.findByOrderId(order.getOrderId());
+        Optional<Order> orderReturn = orderRepository.findByOrderId(order.getOrderId());
 
-        Assertions.assertThat(pokemonOrder).isEmpty();
+        Assertions.assertThat(orderReturn).isEmpty();
     }
 }

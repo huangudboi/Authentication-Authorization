@@ -11,7 +11,12 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RoleId")
     private int roleId;
+
     @Column(name = "RoleName")
     @Enumerated(EnumType.STRING)
     private ERole roleName;
+
+    public Role(ERole roleName) {
+        this.roleName = roleName;
+    }
 }

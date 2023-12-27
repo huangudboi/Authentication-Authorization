@@ -60,7 +60,7 @@ public class OrderControllerTests {
 
     @Test
     public void OrderController_CreateOrder_ReturnCreated() throws Exception {
-        given(orderService.save(ArgumentMatchers.any())).willAnswer((invocation -> invocation.getArgument(0)));
+        given(orderService.createOrder(ArgumentMatchers.any())).willAnswer((invocation -> invocation.getArgument(0)));
 
         ResultActions response = mockMvc.perform(post("/api/v1/order/createOrder")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -95,11 +95,32 @@ public class OrderControllerTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()", CoreMatchers.is(orderList.size())));
     }
 
+    @Test
+    public void OrderController_OrderDetail_ReturnOrder() throws Exception {
+        long orderId = 1L;
+        when(orderService.findByOrderId(orderId)).thenReturn(order);
+
+        ResultActions response = mockMvc.perform(get("/api/v1/order/detailOrder/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(order)));
+
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nameSender", CoreMatchers.is(order.getNameSender())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.phoneSender", CoreMatchers.is(order.getPhoneSender())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.addressSender", CoreMatchers.is(order.getAddressSender())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.emailSender", CoreMatchers.is(order.getEmailSender())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nameReceiver", CoreMatchers.is(order.getNameReceiver())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.phoneReceiver", CoreMatchers.is(order.getPhoneReceiver())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.addressReceiver", CoreMatchers.is(order.getAddressReceiver())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.emailReceiver", CoreMatchers.is(order.getEmailReceiver())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.latitude", CoreMatchers.is(order.getLatitude())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.latitude", CoreMatchers.is(order.getLatitude())));
+    }
 
     @Test
     public void OrderController_DeleteOrder_ReturnString() throws Exception {
         long orderId = 1L;
-        doNothing().when(orderService).deleteOrderById(1);
+        doNothing().when(orderService).deleteOrderById(orderId);
 
         ResultActions response = mockMvc.perform(delete("/api/v1/order/deleteOrder/1")
                 .contentType(MediaType.APPLICATION_JSON));

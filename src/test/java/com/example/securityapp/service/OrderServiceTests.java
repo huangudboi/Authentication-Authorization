@@ -59,7 +59,7 @@ public class OrderServiceTests {
     public void OrderService_CreateOrder_ReturnOrder() {
         when(orderRepository.save(Mockito.any(Order.class))).thenReturn(order);
 
-        Order savedOrder = orderService.save(order);
+        Order savedOrder = orderService.createOrder(order);
 
         Assertions.assertThat(savedOrder).isNotNull();
     }
@@ -81,7 +81,7 @@ public class OrderServiceTests {
 
         when(orderRepository.findByOrderId(orderId)).thenReturn(Optional.ofNullable(order));
 
-        Optional<Order> orderReturn = orderService.findByOrderId(orderId);
+        Order orderReturn = orderService.findByOrderId(orderId);
 
         Assertions.assertThat(orderReturn).isNotNull();
     }

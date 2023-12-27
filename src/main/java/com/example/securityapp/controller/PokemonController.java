@@ -2,15 +2,12 @@ package com.example.securityapp.controller;
 
 
 import com.example.securityapp.Dto.PokemonDto;
-import com.example.securityapp.Dto.PokemonResponse;
-import com.example.securityapp.model.Pokemon;
+import com.example.securityapp.Dto.response.PokemonResponse;
 import com.example.securityapp.service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/")

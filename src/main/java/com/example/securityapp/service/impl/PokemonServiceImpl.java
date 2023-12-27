@@ -1,7 +1,7 @@
 package com.example.securityapp.service.impl;
 
 import com.example.securityapp.Dto.PokemonDto;
-import com.example.securityapp.Dto.PokemonResponse;
+import com.example.securityapp.Dto.response.PokemonResponse;
 import com.example.securityapp.exceptions.PokemonNotFoundException;
 import com.example.securityapp.model.Pokemon;
 import com.example.securityapp.repository.PokemonRepository;

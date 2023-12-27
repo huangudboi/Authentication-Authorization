@@ -1,5 +1,6 @@
-package com.example.securityapp.Dto;
+package com.example.securityapp.Dto.response;
 
+import com.example.securityapp.Dto.PokemonDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

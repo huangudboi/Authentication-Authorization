@@ -33,7 +33,7 @@ public class ReviewRepositoryTests {
     }
 
     @Test
-    public void ReviewRepostory_GetAll_ReturnsMoreThenOneReview() {
+    public void ReviewRepostory_GetAll_ReturnsMoreThanOneReview() {
         Review review = Review.builder().title("title").content("content").stars(5).build();
         Review review2 = Review.builder().title("title").content("content").stars(5).build();
 

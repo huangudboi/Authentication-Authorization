@@ -21,6 +21,7 @@ public class Message implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(name="username")
     private String userName;
     @Column(name="password")

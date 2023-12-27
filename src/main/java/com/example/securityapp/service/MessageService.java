@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface MessageService {
 
     List<Message> findAll();
-    void save(Message message);
-    void remove(Message message);
-    Optional<Message> findById(Long id);
+    Message sendMessage(Message message);
+    void deleteMessage(Long id);
+    Message findById(Long id);
     List<Message> findByUserName(String userName);
 
 }

@@ -1,9 +1,8 @@
 package com.example.securityapp.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.example.securityapp.controller.PokemonController;
 import com.example.securityapp.Dto.PokemonDto;
-import com.example.securityapp.Dto.PokemonResponse;
+import com.example.securityapp.Dto.response.PokemonResponse;
 import com.example.securityapp.Dto.ReviewDto;
 import com.example.securityapp.model.Pokemon;
 import com.example.securityapp.model.Review;
@@ -21,7 +20,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;

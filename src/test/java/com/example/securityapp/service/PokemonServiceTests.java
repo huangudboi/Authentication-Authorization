@@ -1,7 +1,7 @@
 package com.example.securityapp.service;
 
 import com.example.securityapp.Dto.PokemonDto;
-import com.example.securityapp.Dto.PokemonResponse;
+import com.example.securityapp.Dto.response.PokemonResponse;
 import com.example.securityapp.model.Pokemon;
 import com.example.securityapp.repository.PokemonRepository;
 import com.example.securityapp.service.impl.PokemonServiceImpl;
@@ -88,5 +88,6 @@ public class PokemonServiceTests {
         doNothing().when(pokemonRepository).delete(pokemon);
 
         assertAll(() -> pokemonService.deletePokemonId(pokemonId));
+
     }
 }

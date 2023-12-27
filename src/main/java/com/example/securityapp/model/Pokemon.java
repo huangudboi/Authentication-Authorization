@@ -17,9 +17,11 @@ import java.util.List;
 @Entity
 @Table(name = "Pokemon")
 public class Pokemon {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
     private String type;
 

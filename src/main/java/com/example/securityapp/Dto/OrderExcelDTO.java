@@ -1,5 +1,6 @@
 package com.example.securityapp.Dto;
 
+import com.example.securityapp.validator.Phone;
 import com.poiji.annotation.ExcelCell;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class OrderExcelDTO {
     private String nameSender;
 
     @ExcelCell(1)
+    @Phone(message = "phoneSender is not in the correct format")
     @NotBlank(message = "phoneSender_empty")
     private String phoneSender;
 
@@ -35,6 +37,7 @@ public class OrderExcelDTO {
     private String nameReceiver;
 
     @ExcelCell(5)
+    @Phone(message = "phoneReceiver is not in the correct format")
     @NotBlank(message = "phoneReceiver_empty")
     private String phoneReceiver;
 
@@ -48,12 +51,12 @@ public class OrderExcelDTO {
     private String emailReceiver;
 
     @ExcelCell(8)
-    @NotBlank(message = "longitude_empty")
+    @NotNull(message = "longitude_empty")
     @Min(0) @Max(360)
     private Integer longitude;
 
     @ExcelCell(9)
-    @NotBlank(message = "latitude_empty")
+    @NotNull(message = "latitude_empty")
     @Min(0) @Max(360)
     private Integer latitude;
 

@@ -1,5 +1,6 @@
 package com.example.securityapp.service;
 
+import com.example.securityapp.Dto.response.OrderResponse;
 import com.example.securityapp.model.Order;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,5 +12,5 @@ public interface OrderService {
     Order createOrder(Order order);
     void deleteOrderById(long orderId);
     Order findByOrderId(Long orderId);
-    List<String> importAndValidateExcel(MultipartFile multipartFile);
+    OrderResponse importAndValidateExcel(MultipartFile multipartFile);
 }

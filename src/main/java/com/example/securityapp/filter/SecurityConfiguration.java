@@ -1,4 +1,4 @@
-package com.example.securityapp.config;
+package com.example.securityapp.filter;
 
 import com.example.securityapp.security.JWTAuthenticationFilter;
 import lombok.RequiredArgsConstructor;

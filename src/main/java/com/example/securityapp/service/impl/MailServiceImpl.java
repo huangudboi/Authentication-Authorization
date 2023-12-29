@@ -15,6 +15,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 @Service
 @Slf4j
 public class MailServiceImpl implements MailService {
+
     @Autowired
     private JavaMailSender mailSender;
 

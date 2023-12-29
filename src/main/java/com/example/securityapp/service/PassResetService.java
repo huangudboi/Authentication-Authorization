@@ -1,8 +1,6 @@
 package com.example.securityapp.service;
 
-
 import com.example.securityapp.model.PasswordResetToken;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 
 public interface PassResetService {

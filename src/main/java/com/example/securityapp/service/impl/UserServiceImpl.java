@@ -70,7 +70,8 @@ public class UserServiceImpl implements UserService {
         Set<Role> listRoles = new HashSet<>();
         if (strRoles.size() == 0) {
             //User quyen mac dinh
-            Role userRole = roleService.findByRoleName(ERole.USER).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+            Role userRole = roleService.findByRoleName(ERole.USER).orElseThrow(() ->
+                    new RuntimeException("Error: Role is not found"));
             listRoles.add(userRole);
         } else {
             for(String role:strRoles){
@@ -157,7 +158,8 @@ public class UserServiceImpl implements UserService {
             Set<String> strRoles = updateUserDTO.getListRoles();
             Set<Role> listRoles = new HashSet<>();
             if (strRoles == null) {
-                Role userRole = roleService.findByRoleName(ERole.USER).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+                Role userRole = roleService.findByRoleName(ERole.USER).orElseThrow(() ->
+                        new RuntimeException("Error: Role is not found"));
                 listRoles.add(userRole);
             } else {
                 for(String role:strRoles){
@@ -190,7 +192,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<?> deleteUser(int userId){
-        CustomUserDetails customUserDetail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails customUserDetail = (CustomUserDetails) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
         User user = userRepository.findByUserId(userId);
         if (customUserDetail.getAuthorities().size()>user.getListRoles().size()){
             user.setState(State.DISABLED);

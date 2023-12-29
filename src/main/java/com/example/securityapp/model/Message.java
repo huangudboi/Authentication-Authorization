@@ -24,10 +24,13 @@ public class Message implements Serializable {
 
     @Column(name="username")
     private String userName;
+
     @Column(name="password")
     private String password;
+
     @Column(name="messages")
     private String messages;
+
     @Column(name="created_on")
     private String created_on;
 

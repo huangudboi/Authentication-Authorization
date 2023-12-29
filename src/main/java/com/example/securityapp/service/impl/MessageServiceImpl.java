@@ -26,13 +26,15 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void deleteMessage(Long id) {
-        Message message = messageRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Message could not be found"));
+        Message message = messageRepository.findById(id).orElseThrow(() ->
+                new OrderNotFoundException("Message could not be found"));
         messageRepository.delete(message);
     }
 
     @Override
     public Message findById(Long id) {
-        Message message = messageRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Message could not be found"));
+        Message message = messageRepository.findById(id).orElseThrow(() ->
+                new OrderNotFoundException("Message could not be found"));
         return message;
     }
 

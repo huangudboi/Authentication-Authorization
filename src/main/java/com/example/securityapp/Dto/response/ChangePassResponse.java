@@ -8,6 +8,7 @@ public class ChangePassResponse {
 
     public ChangePassResponse() {
     }
+
     public ChangePassResponse(String message) {
         this.message = message;
     }

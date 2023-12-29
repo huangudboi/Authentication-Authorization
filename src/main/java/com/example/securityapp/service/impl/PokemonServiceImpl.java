@@ -61,13 +61,15 @@ public class PokemonServiceImpl implements PokemonService {
 
     @Override
     public PokemonDto getPokemonById(int id) {
-        Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(() -> new PokemonNotFoundException("Pokemon could not be found"));
+        Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(() ->
+                new PokemonNotFoundException("Pokemon could not be found"));
         return mapToDto(pokemon);
     }
 
     @Override
     public PokemonDto updatePokemon(PokemonDto pokemonDto, int id) {
-        Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(() -> new PokemonNotFoundException("Pokemon could not be updated"));
+        Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(() ->
+                new PokemonNotFoundException("Pokemon could not be updated"));
 
         pokemon.setName(pokemonDto.getName());
         pokemon.setType(pokemonDto.getType());
@@ -78,7 +80,8 @@ public class PokemonServiceImpl implements PokemonService {
 
     @Override
     public void deletePokemonId(int id) {
-        Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(() -> new PokemonNotFoundException("Pokemon could not be delete"));
+        Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(() ->
+                new PokemonNotFoundException("Pokemon could not be delete"));
         pokemonRepository.delete(pokemon);
     }
 

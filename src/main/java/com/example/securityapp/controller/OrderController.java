@@ -1,15 +1,18 @@
 package com.example.securityapp.controller;
 
-import com.example.securityapp.model.Message;
 import com.example.securityapp.model.Order;
 import com.example.securityapp.service.OrderService;
+import com.example.securityapp.utils.ExcelGenerator;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -73,5 +76,38 @@ public class OrderController {
             response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
+    }
+
+    @GetMapping("/export-to-excel")
+    public void exportIntoExcelFile(HttpServletResponse response){
+        List <Order> listOfOrders = orderService.findAll();
+        try {
+            ExcelGenerator generator = new ExcelGenerator(listOfOrders);
+            generator.generateExcelFile(response);
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    @PostMapping("/importExcel")
+    public ResponseEntity<String> importExcel(@RequestParam("file") MultipartFile file) {
+        try {
+            // Call a service to handle Excel import and validation
+            List<String> validationErrors = orderService.importAndValidateExcel(file);
+
+            if (validationErrors.isEmpty()) {
+                return new ResponseEntity<>("Import successful", HttpStatus.OK);
+            } else {
+                // Handle validation errors
+                StringBuilder errorMessage = new StringBuilder("Validation errors:\n");
+                for (String error : validationErrors) {
+                    errorMessage.append(error).append("\n");
+                }
+                return new ResponseEntity<>(errorMessage.toString(), HttpStatus.BAD_REQUEST);
+            }
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Error while processing the file", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -3,7 +3,6 @@ package com.example.securityapp.service;
 import com.example.securityapp.model.Message;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface MessageService {
 

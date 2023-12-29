@@ -1,6 +1,5 @@
 package com.example.securityapp.service;
 
-
 import com.example.securityapp.Dto.PokemonDto;
 import com.example.securityapp.Dto.response.PokemonResponse;
 

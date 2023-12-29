@@ -1,5 +1,6 @@
 package com.example.securityapp.controller;
 
+import com.example.securityapp.Dto.response.OrderResponse;
 import com.example.securityapp.model.Order;
 import com.example.securityapp.service.OrderService;
 import com.example.securityapp.utils.ExcelGenerator;
@@ -90,24 +91,18 @@ public class OrderController {
     }
 
     @PostMapping("/importExcel")
-    public ResponseEntity<String> importExcel(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<OrderResponse> importExcel(@RequestParam("file") MultipartFile file) {
+        ResponseEntity<OrderResponse> response;
         try {
             // Call a service to handle Excel import and validation
-            List<String> validationErrors = orderService.importAndValidateExcel(file);
+            OrderResponse orderResponse = orderService.importAndValidateExcel(file);
+            response = new ResponseEntity<>(orderResponse, HttpStatus.OK);
 
-            if (validationErrors.isEmpty()) {
-                return new ResponseEntity<>("Import successful", HttpStatus.OK);
-            } else {
-                // Handle validation errors
-                StringBuilder errorMessage = new StringBuilder("Validation errors:\n");
-                for (String error : validationErrors) {
-                    errorMessage.append(error).append("\n");
-                }
-                return new ResponseEntity<>(errorMessage.toString(), HttpStatus.BAD_REQUEST);
-            }
         } catch (RuntimeException e) {
             e.printStackTrace();
-            return new ResponseEntity<>("Error while processing the file", HttpStatus.INTERNAL_SERVER_ERROR);
+            response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+        return response;
     }
 }

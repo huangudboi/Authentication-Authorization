@@ -1,14 +1,14 @@
 package com.example.securityapp.service.impl;
 
 import com.example.securityapp.Dto.OrderExcelDTO;
-import com.example.securityapp.validator.OrderExcelImportValidator;
-import com.example.securityapp.z_common.abs.ExcelImportValidator;
+import com.example.securityapp.Dto.response.OrderResponse;
 import com.example.securityapp.exceptions.OrderNotFoundException;
 import com.example.securityapp.model.Order;
 import com.example.securityapp.repository.OrderRepository;
 import com.example.securityapp.service.OrderService;
 import com.poiji.bind.Poiji;
 import com.poiji.exception.PoijiExcelType;
+import jakarta.validation.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,6 +16,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +26,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -57,21 +60,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<String> importAndValidateExcel(MultipartFile multipartFile){
-        List<String> validationErrors = new ArrayList<>();
-
-        try {
-            List<OrderExcelDTO> data = Poiji.fromExcel(multipartFile.getInputStream(),
-                    PoijiExcelType.XLSX, OrderExcelDTO.class);
-
-            // Process the imported data
-            for (OrderExcelDTO item : data) {
-                System.out.println(item);
-            }
-        } catch (Exception e) {
-            // Handle the exception
-            e.printStackTrace();
-        }
+    public OrderResponse importAndValidateExcel(MultipartFile multipartFile){
+        List<OrderExcelDTO> data = new ArrayList<>();
 
         try (InputStream inputStream = multipartFile.getInputStream()) {
             Workbook workbook = new XSSFWorkbook(inputStream);
@@ -80,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
             // Perform validation - Example: Check if column headers exist
             Row headerRow = sheet.getRow(0);
             if (headerRow == null) {
-                validationErrors.add("Excel file is empty");
+                return new OrderResponse("Excel file is empty", HttpStatus.NOT_FOUND);
             } else {
                 Iterator<Cell> cellIterator = headerRow.cellIterator();
                 List<String> expectedHeaders = List.of("nameSender", "phoneSender", "addressSender", "emailSender",
@@ -89,15 +79,37 @@ public class OrderServiceImpl implements OrderService {
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
                     if (!expectedHeaders.contains(cell.getStringCellValue())) {
-                        validationErrors.add("Invalid column header: " + cell.getStringCellValue());
+                        return new OrderResponse("Invalid column header: " + cell.getStringCellValue()
+                                , HttpStatus.NOT_MODIFIED);
                     }
                 }
+
+                try {
+                    data = Poiji.fromExcel(multipartFile.getInputStream(),
+                            PoijiExcelType.XLSX, OrderExcelDTO.class);
+
+                    // Process the imported data
+                    for (OrderExcelDTO item : data) {
+                        Set<ConstraintViolation<OrderExcelDTO>> violations = Validation
+                                .buildDefaultValidatorFactory().getValidator().validate(item);
+                        for (ConstraintViolation<OrderExcelDTO> violation : violations) {
+                            return new OrderResponse("Order at index " + (data.indexOf(item)+1) +
+                                    ": " + violation.getPropertyPath() + " " + violation.getMessage()
+                                    , HttpStatus.NOT_MODIFIED);
+                        }
+                    }
+                } catch (IOException e) {
+                    // Handle the exception
+                    e.printStackTrace();
+                } catch (ValidationException e){
+                    e.printStackTrace();
+                }
             }
+
         }catch (IOException ex){
             ex.printStackTrace();
         }
 
-        return validationErrors;
-
+        return new OrderResponse(data,"Import successful", HttpStatus.OK);
     }
 }

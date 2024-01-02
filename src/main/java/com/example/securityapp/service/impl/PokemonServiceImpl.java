@@ -1,7 +1,7 @@
 package com.example.securityapp.service.impl;
 
-import com.example.securityapp.Dto.PokemonDto;
-import com.example.securityapp.Dto.response.PokemonResponse;
+import com.example.securityapp.dto.PokemonDTO;
+import com.example.securityapp.dto.response.PokemonResponse;
 import com.example.securityapp.exceptions.PokemonNotFoundException;
 import com.example.securityapp.model.Pokemon;
 import com.example.securityapp.repository.PokemonRepository;
@@ -27,14 +27,14 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public PokemonDto createPokemon(PokemonDto pokemonDto) {
+    public PokemonDTO createPokemon(PokemonDTO pokemonDto) {
         Pokemon pokemon = new Pokemon();
         pokemon.setName(pokemonDto.getName());
         pokemon.setType(pokemonDto.getType());
 
         Pokemon newPokemon = pokemonRepository.save(pokemon);
 
-        PokemonDto pokemonResponse = new PokemonDto();
+        PokemonDTO pokemonResponse = new PokemonDTO();
         pokemonResponse.setId(newPokemon.getId());
         pokemonResponse.setName(newPokemon.getName());
         pokemonResponse.setType(newPokemon.getType());
@@ -46,7 +46,7 @@ public class PokemonServiceImpl implements PokemonService {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<Pokemon> pokemons = pokemonRepository.findAll(pageable);
         List<Pokemon> listOfPokemon = pokemons.getContent();
-        List<PokemonDto> content = listOfPokemon.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
+        List<PokemonDTO> content = listOfPokemon.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
 
         PokemonResponse pokemonResponse = new PokemonResponse();
         pokemonResponse.setContent(content);
@@ -60,14 +60,14 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public PokemonDto getPokemonById(int id) {
+    public PokemonDTO getPokemonById(int id) {
         Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(() ->
                 new PokemonNotFoundException("Pokemon could not be found"));
         return mapToDto(pokemon);
     }
 
     @Override
-    public PokemonDto updatePokemon(PokemonDto pokemonDto, int id) {
+    public PokemonDTO updatePokemon(PokemonDTO pokemonDto, int id) {
         Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(() ->
                 new PokemonNotFoundException("Pokemon could not be updated"));
 
@@ -85,15 +85,15 @@ public class PokemonServiceImpl implements PokemonService {
         pokemonRepository.delete(pokemon);
     }
 
-    private PokemonDto mapToDto(Pokemon pokemon) {
-        PokemonDto pokemonDto = new PokemonDto();
+    private PokemonDTO mapToDto(Pokemon pokemon) {
+        PokemonDTO pokemonDto = new PokemonDTO();
         pokemonDto.setId(pokemon.getId());
         pokemonDto.setName(pokemon.getName());
         pokemonDto.setType(pokemon.getType());
         return pokemonDto;
     }
 
-    private Pokemon mapToEntity(PokemonDto pokemonDto) {
+    private Pokemon mapToEntity(PokemonDTO pokemonDto) {
         Pokemon pokemon = new Pokemon();
         pokemon.setName(pokemonDto.getName());
         pokemon.setType(pokemonDto.getType());

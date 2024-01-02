@@ -1,6 +1,6 @@
-package com.example.securityapp.Dto.response;
+package com.example.securityapp.dto.response;
 
-import com.example.securityapp.Dto.OrderExcelDTO;
+import com.example.securityapp.dto.OrderExcelDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

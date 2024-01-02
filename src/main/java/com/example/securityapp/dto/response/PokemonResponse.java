@@ -1,6 +1,6 @@
-package com.example.securityapp.Dto.response;
+package com.example.securityapp.dto.response;
 
-import com.example.securityapp.Dto.PokemonDto;
+import com.example.securityapp.dto.PokemonDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class PokemonResponse {
-    private List<PokemonDto> content;
+    private List<PokemonDTO> content;
     private int pageNo;
     private int pageSize;
     private long totalElements;

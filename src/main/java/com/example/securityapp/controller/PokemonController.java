@@ -1,8 +1,8 @@
 package com.example.securityapp.controller;
 
 
-import com.example.securityapp.Dto.PokemonDto;
-import com.example.securityapp.Dto.response.PokemonResponse;
+import com.example.securityapp.dto.PokemonDTO;
+import com.example.securityapp.dto.response.PokemonResponse;
 import com.example.securityapp.service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,19 +29,19 @@ public class PokemonController {
     }
 
     @GetMapping("pokemon/{id}")
-    public ResponseEntity<PokemonDto> pokemonDetail(@PathVariable int id) {
+    public ResponseEntity<PokemonDTO> pokemonDetail(@PathVariable int id) {
         return ResponseEntity.ok(pokemonService.getPokemonById(id));
     }
 
     @PostMapping("pokemon/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<PokemonDto> createPokemon(@RequestBody PokemonDto pokemonDto) {
+    public ResponseEntity<PokemonDTO> createPokemon(@RequestBody PokemonDTO pokemonDto) {
         return new ResponseEntity<>(pokemonService.createPokemon(pokemonDto), HttpStatus.CREATED);
     }
 
     @PutMapping("pokemon/{id}/update")
-    public ResponseEntity<PokemonDto> updatePokemon(@RequestBody PokemonDto pokemonDto, @PathVariable("id") int pokemonId) {
-        PokemonDto response = pokemonService.updatePokemon(pokemonDto, pokemonId);
+    public ResponseEntity<PokemonDTO> updatePokemon(@RequestBody PokemonDTO pokemonDto, @PathVariable("id") int pokemonId) {
+        PokemonDTO response = pokemonService.updatePokemon(pokemonDto, pokemonId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

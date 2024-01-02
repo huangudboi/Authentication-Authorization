@@ -1,4 +1,4 @@
-package com.example.securityapp.Dto;
+package com.example.securityapp.dto;
 
 import com.example.securityapp.validator.Phone;
 import com.poiji.annotation.ExcelCell;

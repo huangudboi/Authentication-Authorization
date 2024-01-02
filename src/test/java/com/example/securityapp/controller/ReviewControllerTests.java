@@ -1,16 +1,14 @@
 package com.example.securityapp.controller;
 
+import com.example.securityapp.dto.PokemonDTO;
+import com.example.securityapp.dto.ReviewDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.example.securityapp.controller.ReviewController;
-import com.example.securityapp.Dto.PokemonDto;
-import com.example.securityapp.Dto.ReviewDto;
 import com.example.securityapp.model.Pokemon;
 import com.example.securityapp.model.Review;
 import com.example.securityapp.service.ReviewService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,12 +16,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
 
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -43,15 +39,15 @@ public class ReviewControllerTests {
     private ObjectMapper objectMapper;
     private Pokemon pokemon;
     private Review review;
-    private ReviewDto reviewDto;
-    private PokemonDto pokemonDto;
+    private ReviewDTO reviewDto;
+    private PokemonDTO pokemonDto;
 
     @BeforeEach
     public void init() {
         pokemon = Pokemon.builder().name("pikachu").type("electric").build();
-        pokemonDto = PokemonDto.builder().name("pickachu").type("electric").build();
+        pokemonDto = PokemonDTO.builder().name("pickachu").type("electric").build();
         review = Review.builder().title("title").content("content").stars(5).build();
-        reviewDto = ReviewDto.builder().title("review title").content("test content").stars(5).build();
+        reviewDto = ReviewDTO.builder().title("review title").content("test content").stars(5).build();
     }
 
     @Test

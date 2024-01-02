@@ -1,6 +1,6 @@
 package com.example.securityapp.service;
 
-import com.example.securityapp.Dto.DataMailDTO;
+import com.example.securityapp.dto.DataMailDTO;
 import jakarta.mail.MessagingException;
 
 public interface MailService {

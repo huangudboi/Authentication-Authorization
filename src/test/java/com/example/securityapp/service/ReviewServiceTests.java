@@ -1,7 +1,7 @@
 package com.example.securityapp.service;
 
-import com.example.securityapp.Dto.PokemonDto;
-import com.example.securityapp.Dto.ReviewDto;
+import com.example.securityapp.dto.PokemonDTO;
+import com.example.securityapp.dto.ReviewDTO;
 import com.example.securityapp.model.Pokemon;
 import com.example.securityapp.model.Review;
 import com.example.securityapp.repository.PokemonRepository;
@@ -36,15 +36,15 @@ public class ReviewServiceTests {
 
     private Pokemon pokemon;
     private Review review;
-    private ReviewDto reviewDto;
-    private PokemonDto pokemonDto;
+    private ReviewDTO reviewDto;
+    private PokemonDTO pokemonDto;
 
     @BeforeEach
     public void init() {
         pokemon = Pokemon.builder().name("pikachu").type("electric").build();
-        pokemonDto = PokemonDto.builder().name("pickachu").type("electric").build();
+        pokemonDto = PokemonDTO.builder().name("pickachu").type("electric").build();
         review = Review.builder().title("title").content("content").stars(5).build();
-        reviewDto = ReviewDto.builder().title("review title").content("test content").stars(5).build();
+        reviewDto = ReviewDTO.builder().title("review title").content("test content").stars(5).build();
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ReviewServiceTests {
         when(pokemonRepository.findById(pokemon.getId())).thenReturn(Optional.of(pokemon));
         when(reviewRepository.save(Mockito.any(Review.class))).thenReturn(review);
 
-        ReviewDto savedReview = reviewService.createReview(pokemon.getId(), reviewDto);
+        ReviewDTO savedReview = reviewService.createReview(pokemon.getId(), reviewDto);
 
         Assertions.assertThat(savedReview).isNotNull();
     }
@@ -62,7 +62,7 @@ public class ReviewServiceTests {
         int reviewId = 1;
         when(reviewRepository.findByPokemonId(reviewId)).thenReturn(Arrays.asList(review));
 
-        List<ReviewDto> pokemonReturn = reviewService.getReviewsByPokemonId(reviewId);
+        List<ReviewDTO> pokemonReturn = reviewService.getReviewsByPokemonId(reviewId);
 
         Assertions.assertThat(pokemonReturn).isNotNull();
     }
@@ -77,7 +77,7 @@ public class ReviewServiceTests {
         when(pokemonRepository.findById(pokemonId)).thenReturn(Optional.of(pokemon));
         when(reviewRepository.findById(reviewId)).thenReturn(Optional.of(review));
 
-        ReviewDto reviewReturn = reviewService.getReviewById(reviewId, pokemonId);
+        ReviewDTO reviewReturn = reviewService.getReviewById(reviewId, pokemonId);
 
         Assertions.assertThat(reviewReturn).isNotNull();
         Assertions.assertThat(reviewReturn).isNotNull();
@@ -94,7 +94,7 @@ public class ReviewServiceTests {
         when(reviewRepository.findById(reviewId)).thenReturn(Optional.of(review));
         when(reviewRepository.save(review)).thenReturn(review);
 
-        ReviewDto updateReturn = reviewService.updateReview(pokemonId, reviewId, reviewDto);
+        ReviewDTO updateReturn = reviewService.updateReview(pokemonId, reviewId, reviewDto);
 
         Assertions.assertThat(updateReturn).isNotNull();
     }

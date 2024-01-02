@@ -1,6 +1,6 @@
 package com.example.securityapp.controller;
 
-import com.example.securityapp.Dto.ReviewDto;
+import com.example.securityapp.dto.ReviewDTO;
 import com.example.securityapp.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,25 +21,25 @@ public class ReviewController {
     }
 
     @PostMapping("/pokemon/{pokemonId}/reviews")
-    public ResponseEntity<ReviewDto> createReview(@PathVariable(value = "pokemonId") int pokemonId, @RequestBody ReviewDto reviewDto) {
+    public ResponseEntity<ReviewDTO> createReview(@PathVariable(value = "pokemonId") int pokemonId, @RequestBody ReviewDTO reviewDto) {
         return new ResponseEntity<>(reviewService.createReview(pokemonId, reviewDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/pokemon/{pokemonId}/reviews")
-    public List<ReviewDto> getReviewsByPokemonId(@PathVariable(value = "pokemonId") int pokemonId) {
+    public List<ReviewDTO> getReviewsByPokemonId(@PathVariable(value = "pokemonId") int pokemonId) {
         return reviewService.getReviewsByPokemonId(pokemonId);
     }
 
     @GetMapping("/pokemon/{pokemonId}/reviews/{id}")
-    public ResponseEntity<ReviewDto> getReviewById(@PathVariable(value = "pokemonId") int pokemonId, @PathVariable(value = "id") int reviewId) {
-        ReviewDto reviewDto = reviewService.getReviewById(pokemonId, reviewId);
+    public ResponseEntity<ReviewDTO> getReviewById(@PathVariable(value = "pokemonId") int pokemonId, @PathVariable(value = "id") int reviewId) {
+        ReviewDTO reviewDto = reviewService.getReviewById(pokemonId, reviewId);
         return new ResponseEntity<>(reviewDto, HttpStatus.OK);
     }
 
     @PutMapping("/pokemon/{pokemonId}/reviews/{id}")
-    public ResponseEntity<ReviewDto> updateReview(@PathVariable(value = "pokemonId") int pokemonId, @PathVariable(value = "id") int reviewId,
-                                                  @RequestBody ReviewDto reviewDto) {
-        ReviewDto updatedReview = reviewService.updateReview(pokemonId, reviewId, reviewDto);
+    public ResponseEntity<ReviewDTO> updateReview(@PathVariable(value = "pokemonId") int pokemonId, @PathVariable(value = "id") int reviewId,
+                                                  @RequestBody ReviewDTO reviewDto) {
+        ReviewDTO updatedReview = reviewService.updateReview(pokemonId, reviewId, reviewDto);
         return new ResponseEntity<>(updatedReview, HttpStatus.OK);
     }
 

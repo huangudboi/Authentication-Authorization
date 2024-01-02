@@ -1,7 +1,7 @@
 package com.example.securityapp.service.impl;
 
-import com.example.securityapp.Dto.DataMailDTO;
-import com.example.securityapp.Dto.response.ChangePassResponse;
+import com.example.securityapp.dto.DataMailDTO;
+import com.example.securityapp.dto.response.ChangePassResponse;
 import com.example.securityapp.model.PasswordResetToken;
 import com.example.securityapp.model.User;
 import com.example.securityapp.repository.PassResetRepository;

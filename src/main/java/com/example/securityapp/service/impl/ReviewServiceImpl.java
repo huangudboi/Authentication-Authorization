@@ -1,13 +1,12 @@
 package com.example.securityapp.service.impl;
 
-import com.example.securityapp.Dto.ReviewDto;
+import com.example.securityapp.dto.ReviewDTO;
 import com.example.securityapp.exceptions.PokemonNotFoundException;
 import com.example.securityapp.exceptions.ReviewNotFoundException;
 import com.example.securityapp.model.Pokemon;
 import com.example.securityapp.model.Review;
 import com.example.securityapp.repository.PokemonRepository;
 import com.example.securityapp.repository.ReviewRepository;
-import com.example.securityapp.service.PokemonService;
 import com.example.securityapp.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +30,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDto createReview(int pokemonId, ReviewDto reviewDto) {
+    public ReviewDTO createReview(int pokemonId, ReviewDTO reviewDto) {
         Review review = mapToEntity(reviewDto);
 
         Pokemon pokemon = pokemonRepository.findById(pokemonId).orElseThrow(() ->
@@ -45,14 +44,14 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewDto> getReviewsByPokemonId(int id) {
+    public List<ReviewDTO> getReviewsByPokemonId(int id) {
         List<Review> reviews = reviewRepository.findByPokemonId(id);
 
         return reviews.stream().map(review -> mapToDto(review)).collect(Collectors.toList());
     }
 
     @Override
-    public ReviewDto getReviewById(int reviewId, int pokemonId) {
+    public ReviewDTO getReviewById(int reviewId, int pokemonId) {
         Pokemon pokemon = pokemonRepository.findById(pokemonId).orElseThrow(() ->
                 new PokemonNotFoundException("Pokemon with associated review not found"));
 
@@ -67,7 +66,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDto updateReview(int pokemonId, int reviewId, ReviewDto reviewDto) {
+    public ReviewDTO updateReview(int pokemonId, int reviewId, ReviewDTO reviewDto) {
         Pokemon pokemon = pokemonRepository.findById(pokemonId).orElseThrow(() ->
                 new PokemonNotFoundException("Pokemon with associated review not found"));
 
@@ -102,8 +101,8 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.delete(review);
     }
 
-    private ReviewDto mapToDto(Review review) {
-        ReviewDto reviewDto = new ReviewDto();
+    private ReviewDTO mapToDto(Review review) {
+        ReviewDTO reviewDto = new ReviewDTO();
         reviewDto.setId(review.getId());
         reviewDto.setTitle(review.getTitle());
         reviewDto.setContent(review.getContent());
@@ -111,7 +110,7 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDto;
     }
 
-    private Review mapToEntity(ReviewDto reviewDto) {
+    private Review mapToEntity(ReviewDTO reviewDto) {
         Review review = new Review();
         review.setId(reviewDto.getId());
         review.setTitle(reviewDto.getTitle());

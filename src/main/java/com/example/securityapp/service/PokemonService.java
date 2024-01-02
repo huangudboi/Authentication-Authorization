@@ -1,12 +1,12 @@
 package com.example.securityapp.service;
 
-import com.example.securityapp.Dto.PokemonDto;
-import com.example.securityapp.Dto.response.PokemonResponse;
+import com.example.securityapp.dto.PokemonDTO;
+import com.example.securityapp.dto.response.PokemonResponse;
 
 public interface PokemonService {
-    PokemonDto createPokemon(PokemonDto pokemonDto);
+    PokemonDTO createPokemon(PokemonDTO pokemonDto);
     PokemonResponse getAllPokemon(int pageNo, int pageSize);
-    PokemonDto getPokemonById(int id);
-    PokemonDto updatePokemon(PokemonDto pokemonDto, int id);
+    PokemonDTO getPokemonById(int id);
+    PokemonDTO updatePokemon(PokemonDTO pokemonDto, int id);
     void deletePokemonId(int id);
 }

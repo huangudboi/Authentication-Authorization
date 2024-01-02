@@ -1,8 +1,9 @@
 package com.example.securityapp.service.impl;
 
-import com.example.securityapp.Dto.*;
-import com.example.securityapp.Dto.response.ChangePassResponse;
-import com.example.securityapp.Dto.response.AuthenticationResponse;
+import com.example.securityapp.config.SecurityConfig;
+import com.example.securityapp.dto.*;
+import com.example.securityapp.dto.response.ChangePassResponse;
+import com.example.securityapp.dto.response.AuthenticationResponse;
 import com.example.securityapp.model.ERole;
 import com.example.securityapp.model.Role;
 import com.example.securityapp.model.State;
@@ -58,15 +59,15 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByEmail(registerDTO.getEmail())) {
             return new AuthenticationResponse("Error: Email is already", false);
         }
-        var codenumber = DataUtils.generateTempPwd(4);
+        var codeNumber = DataUtils.generateTempPwd(4);
         User user = new User();
         user.setFullName(registerDTO.getFullName());
         user.setUserName(registerDTO.getUserName());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
         user.setEmail(registerDTO.getEmail());
-        user.setCode(codenumber);
+        user.setCode(codeNumber);
         user.setState(State.ACTIVE);
-        Set<String> strRoles = registerDTO.getListRoles();
+        Set<ERole> strRoles = registerDTO.getListRoles();
         Set<Role> listRoles = new HashSet<>();
         if (strRoles.size() == 0) {
             //User quyen mac dinh
@@ -74,21 +75,21 @@ public class UserServiceImpl implements UserService {
                     new RuntimeException("Error: Role is not found"));
             listRoles.add(userRole);
         } else {
-            for(String role:strRoles){
+            for(ERole role:strRoles){
                 switch (role) {
-                    case "ADMIN":
+                    case ADMIN:
                         System.out.println("Có chức ADMIN");
                         Role adminRole = roleService.findByRoleName(ERole.ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                         listRoles.add(adminRole);
                         continue;
-                    case "MODERATOR":
+                    case MODERATOR:
                         System.out.println("Có chức MODERATOR");
                         Role modRole = roleService.findByRoleName(ERole.MODERATOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                         listRoles.add(modRole);
                         continue;
-                    case "USER":
+                    case USER:
                         System.out.println("Có chức USER");
                         Role userRole = roleService.findByRoleName(ERole.USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
@@ -107,7 +108,7 @@ public class UserServiceImpl implements UserService {
             Map<String, Object> props = new HashMap<>();
             props.put("fullName", registerDTO.getFullName());
             props.put("userName", registerDTO.getUserName());
-            props.put("code", "Mã code đăng nhập hệ thống của bạn là:"+ codenumber);
+            props.put("code", "Mã code đăng nhập hệ thống của bạn là:"+ codeNumber);
             dataMail.setProps(props);
             mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
         } catch (MessagingException exp){
@@ -155,26 +156,26 @@ public class UserServiceImpl implements UserService {
             userChange.setEmail(updateUserDTO.getEmail());
             userChange.setCode(user.getCode());
             userChange.setState(user.getState());
-            Set<String> strRoles = updateUserDTO.getListRoles();
+            Set<ERole> strRoles = updateUserDTO.getListRoles();
             Set<Role> listRoles = new HashSet<>();
             if (strRoles == null) {
                 Role userRole = roleService.findByRoleName(ERole.USER).orElseThrow(() ->
                         new RuntimeException("Error: Role is not found"));
                 listRoles.add(userRole);
             } else {
-                for(String role:strRoles){
+                for(ERole role:strRoles){
                     switch (role) {
-                        case "ADMIN":
+                        case ADMIN:
                             Role adminRole = roleService.findByRoleName(ERole.ADMIN)
                                     .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                             listRoles.add(adminRole);
                             continue;
-                        case "MODERATOR":
+                        case MODERATOR:
                             Role modRole = roleService.findByRoleName(ERole.MODERATOR)
                                     .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                             listRoles.add(modRole);
                             continue;
-                        case "USER":
+                        case USER:
                             Role userRole = roleService.findByRoleName(ERole.USER)
                                     .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                             listRoles.add(userRole);
@@ -188,6 +189,7 @@ public class UserServiceImpl implements UserService {
         }
         userRepository.save(userChange);
         return ResponseEntity.ok(new ChangePassResponse("User update successfully"));
+
     }
 
     @Override

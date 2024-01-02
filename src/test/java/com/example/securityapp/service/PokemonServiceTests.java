@@ -1,7 +1,7 @@
 package com.example.securityapp.service;
 
-import com.example.securityapp.Dto.PokemonDto;
-import com.example.securityapp.Dto.response.PokemonResponse;
+import com.example.securityapp.dto.PokemonDTO;
+import com.example.securityapp.dto.response.PokemonResponse;
 import com.example.securityapp.model.Pokemon;
 import com.example.securityapp.repository.PokemonRepository;
 import com.example.securityapp.service.impl.PokemonServiceImpl;
@@ -35,11 +35,11 @@ public class PokemonServiceTests {
         Pokemon pokemon = Pokemon.builder()
                 .name("pikachu")
                 .type("electric").build();
-        PokemonDto pokemonDto = PokemonDto.builder().name("pickachu").type("electric").build();
+        PokemonDTO pokemonDto = PokemonDTO.builder().name("pickachu").type("electric").build();
 
         when(pokemonRepository.save(Mockito.any(Pokemon.class))).thenReturn(pokemon);
 
-        PokemonDto savedPokemon = pokemonService.createPokemon(pokemonDto);
+        PokemonDTO savedPokemon = pokemonService.createPokemon(pokemonDto);
 
         Assertions.assertThat(savedPokemon).isNotNull();
     }
@@ -60,7 +60,7 @@ public class PokemonServiceTests {
         Pokemon pokemon = Pokemon.builder().id(1).name("pikachu").type("electric").type("this is a type").build();
         when(pokemonRepository.findById(pokemonId)).thenReturn(Optional.ofNullable(pokemon));
 
-        PokemonDto pokemonReturn = pokemonService.getPokemonById(pokemonId);
+        PokemonDTO pokemonReturn = pokemonService.getPokemonById(pokemonId);
 
         Assertions.assertThat(pokemonReturn).isNotNull();
     }
@@ -69,12 +69,12 @@ public class PokemonServiceTests {
     public void PokemonService_UpdatePokemon_ReturnPokemonDto() {
         int pokemonId = 1;
         Pokemon pokemon = Pokemon.builder().id(1).name("pikachu").type("electric").type("this is a type").build();
-        PokemonDto pokemonDto = PokemonDto.builder().id(1).name("pikachu").type("electric").type("this is a type").build();
+        PokemonDTO pokemonDto = PokemonDTO.builder().id(1).name("pikachu").type("electric").type("this is a type").build();
 
         when(pokemonRepository.findById(pokemonId)).thenReturn(Optional.ofNullable(pokemon));
         when(pokemonRepository.save(pokemon)).thenReturn(pokemon);
 
-        PokemonDto updateReturn = pokemonService.updatePokemon(pokemonDto, pokemonId);
+        PokemonDTO updateReturn = pokemonService.updatePokemon(pokemonDto, pokemonId);
 
         Assertions.assertThat(updateReturn).isNotNull();
     }

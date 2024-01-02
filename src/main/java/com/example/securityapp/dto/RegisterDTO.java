@@ -1,5 +1,7 @@
-package com.example.securityapp.Dto;
+package com.example.securityapp.dto;
 
+import com.example.securityapp.model.ERole;
+import com.example.securityapp.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +20,5 @@ public class RegisterDTO {
     private String userName;
     private String email;
     private String password;
-    private Set<String> listRoles = new HashSet<>();
+    private Set<ERole> listRoles = new HashSet<>();
 }

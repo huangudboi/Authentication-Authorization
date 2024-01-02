@@ -1,4 +1,4 @@
-package com.example.securityapp.Dto.response;
+package com.example.securityapp.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthenticationResponse {
 
-    String message;
-    Boolean status;
+    private String message;
+    private Boolean status;
     private String userName;
     private String token;
 

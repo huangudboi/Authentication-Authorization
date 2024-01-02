@@ -1,8 +1,6 @@
 package com.example.securityapp.service;
 
-import com.example.securityapp.Dto.response.PokemonResponse;
 import com.example.securityapp.model.Order;
-import com.example.securityapp.model.Pokemon;
 import com.example.securityapp.repository.OrderRepository;
 import com.example.securityapp.service.impl.OrderServiceImpl;
 import org.assertj.core.api.Assertions;
@@ -13,10 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 

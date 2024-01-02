@@ -1,4 +1,4 @@
-package com.example.securityapp.Dto;
+package com.example.securityapp.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,12 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class ReviewDto {
+public class PokemonDTO {
     private int id;
-    private String title;
-    private String content;
-    private int stars;
+    private String name;
+    private String type;
 }

@@ -1,10 +1,10 @@
 package com.example.securityapp.service;
 
-import com.example.securityapp.Dto.ChangePasswordDTO;
-import com.example.securityapp.Dto.LoginDTO;
-import com.example.securityapp.Dto.RegisterDTO;
-import com.example.securityapp.Dto.UpdateUserDTO;
-import com.example.securityapp.Dto.response.AuthenticationResponse;
+import com.example.securityapp.dto.ChangePasswordDTO;
+import com.example.securityapp.dto.LoginDTO;
+import com.example.securityapp.dto.RegisterDTO;
+import com.example.securityapp.dto.UpdateUserDTO;
+import com.example.securityapp.dto.response.AuthenticationResponse;
 import org.springframework.http.ResponseEntity;
 
 public interface UserService {
